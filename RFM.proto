@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package example;
+
+service RemoteFolderManager {
+  rpc actionF (Msg) returns (Resp) {}
+}
+
+message Msg {
+  string id = 1;
+  string path = 2;
+  string newPath = 3;
+  int32 type = 4;
+  bytes file = 5;
+}
+
+message Resp {
+  int32 code = 1;
+  string diskId = 2;
+}
