@@ -10,7 +10,6 @@ import base64
 
 import db
 
-# получение ip из конфигов
 import queue1
 
 
@@ -93,7 +92,13 @@ def server():
     config = configparser.ConfigParser()
     config.read("config.ini")
 
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10), options=[('grpc.max_send_message_length', 50*1024*1024), ('grpc.max_receive_message_length', 50*1024*1024)])
+    server = grpc.server(
+        futures.ThreadPoolExecutor(max_workers=10),
+        options=[
+            ('grpc.max_send_message_length', 50*1024*1024),
+                 ('grpc.max_receive_message_length', 50*1024*1024)
+        ])
+
     RFM_pb2_grpc.add_RemoteFolderManagerServicer_to_server(RemoteFolderManager(), server)
     server.add_insecure_port(config['Conn']['ip'])
     server.start()
